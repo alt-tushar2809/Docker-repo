@@ -16,7 +16,7 @@ yum install docker -y
 ##### Referance URL : https://docs.docker.com/install/linux/docker-ce/centos/#install-using-the-repository
 ### PREREQUISITES
 
-Please follow below steps to install docker CE on CentoOS server instance. For RedHat only Docker EE available 
+ 
 
 1.Install required packages.
 
@@ -61,6 +61,8 @@ Docker Commands
 1. how to search a docker image in hub.docker.com
 ```sh
 docker search httpd
+
+
 ```
 2. Download a docker image from hub.docker.com
 ```sh
@@ -99,7 +101,7 @@ docker ps -a
 8. run a OS based container which interactive mode (nothing but login to container after it is up and running)
 
 ```sh
-docker run -i -t --name centos_server centos:latest
+ docker run -i -t --name centos_server centos:latest
 i - interactive
 t - Terminal
 ```
@@ -124,4 +126,92 @@ docker rm <container_id>
 ```sh
 docker exec -it <container_Name> /bin/bash
 ```
+
+Docker Volumes
+
+
+# Manage data in Docker
+By default all files created inside a container are stored on a writable container layer. This means that:  
+The data doesn’t persist when that container no longer exists, and it can be difficult to get the data out of the container if another process needs it.
+
+To list out existing volumes 
+  ```sh 
+  docker volume ls
+  ```
+   #### to create a container for stateless applications 
+  ```sh
+  docker run -it --name vtuatjenkins01
+  ```
+Docker has 3 options for containers to store files in the host machine, so that the files are persisted even after the container stops:
+
+Docker Volume Types
+1. anonymous volumes
+1. named voluems
+1. host volume or bind volumes
+ 
+Anymous Volumes
+
+Create a container with an anonymous volume which is mounted as `/data01` on container. in this case we mention container directory name. On host system it maps to a random-hash directory under /var/lib/docker directory. 
+  ```sh 
+  docker run -it --name vtwebuat01 -v /data01 nginx /bin/bash
+  ```
+On Host to verify volume 
+  ```sh
+  docker volume ls 
+  docker inspect <volume_name>
+  ```
+
+Named Volumes 
+
+Create a container with a named volume name which is mounted as `/data01` on container. You can see volume name as `vtwebuat02_data01_val`
+  ```sh 
+  docker run -it --name vtwebuat02 -v vtwebuat02_data01_val:/data01 nginx /bin/bash
+  ```
+Create a named volume then attach volume to a container 
+  ```sh 
+  docker volume create vtuatweb03_data01_vol
+  docker run -it --name vtuatweb03 -v vtuatweb02_data01_vol:/data01 nginx /bin/bash
+  ```
+
+Create a named volume with size 
+  ```sh
+  docker volume create --opt o=size=100m --opt device=/data3 --opt type=btrfs vtuatdb02_data3 // to create volume with size 
+  ```
+
+ Host Volumes 
+
+Create a host volume 
+  ```sh 
+  mkdir /opt/data02
+  docker run -it --name vtwebuat03 -v /opt/data02:/data02 nginx /bin/bash
+  ```
+ **
+ Docker commands to DEBUG, LOG, Resource utilization (CPU, memory, disk) by docker running container. 
+ 
+ Running docker stats on all running containers against a Linux daemon.
+ 
+ docker stats :- Shows the memory utilization, CPU, memory disk of running containers
+ 
+ docker stats container_name container_id :- shows the stats of specific container.
+ 
+ docker stats --all --format "table {{.Container}}\t{{.CPUPerc}}\t{{.MemUsage}}" container_name container_name :- Shows the stats in table format
+ 
+ docker log container_name :- Shows the logs of the container
+ 
+ docker -D info :- debug
+ 
+ _____________________________________________________________________________________________________________________________________________________________________________________
+ 
+ 
+  
+  
+ 
+ 
+ 
+ 
+ 
+
+**
+
+
 
