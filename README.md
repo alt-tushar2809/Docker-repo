@@ -200,6 +200,19 @@ Create a host volume
  
  docker -D info :- debug
  
+ Docker Logs Location in Linux
+ 
+Ubuntu 	/var/log/upstart/docker.log
+
+Boot2Docker 	/var/log/docker.log
+
+Debian1 	/var/log/daemon.log
+
+Systemd based OSes (CoreOS, SUSE, Fedora, CentOS, Red Hat Enterprise  	journalctl -u docker.service
+
+
+ 
+ 
  _____________________________________________________________________________________________________________________________________________________________________________________
  
  
