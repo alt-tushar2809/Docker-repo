@@ -209,11 +209,25 @@ Boot2Docker 	/var/log/docker.log
 Debian1 	/var/log/daemon.log
 
 Systemd based OSes (CoreOS, SUSE, Fedora, CentOS, Red Hat Enterprise  	journalctl -u docker.service
+___________________________________________________________________________________________________________________________________________________________________________________
 
-
+ **Kubectl Commands**
+ 
+ kubectl get svc 
+ 
+ kubectl get pods
+ 
+ kubectl apply -f app_name
+ 
+ kubectl top [flags] [options]  kubectl top nodes, pods              Display Resource (CPU/Memory/Storage) usage.
+ 
+ kubectl logs -c -p -f container_name
+ 
+ kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+ 
+ kubectl get deployment metrics-server -n kube-system
  
  
- _____________________________________________________________________________________________________________________________________________________________________________________
  
  
   
