@@ -227,8 +227,14 @@ ________________________________________________________________________________
  
  kubectl get deployment metrics-server -n kube-system
  
+ **Debugging Pods**
  
+ kubectl describe pods ${POD_NAME}
  
+** **My pod stays pending
+If a pod is stuck in Pending it means that it can not be scheduled onto a node. Generally this is because there are insufficient resources of one type or another that prevent scheduling. Look at the output of the kubectl describe ... command above. There should be messages from the scheduler about why it can not schedule your pod.
+ **
+ **
  
   
   
