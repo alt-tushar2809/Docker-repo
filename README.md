@@ -231,11 +231,27 @@ ________________________________________________________________________________
  
  kubectl describe pods ${POD_NAME}
  
-** **My pod stays pending
-If a pod is stuck in Pending it means that it can not be scheduled onto a node. Generally this is because there are insufficient resources of one type or another that prevent scheduling. Look at the output of the kubectl describe ... command above. There should be messages from the scheduler about why it can not schedule your pod.
- **
- **
  
+**If a pod is stuck in Pending it means that it can not be scheduled onto a node. Generally this is because there are insufficient resources of one type or another that prevent scheduling. Look at the output of the kubectl describe ... command above. There should be messages from the scheduler about why it can not schedule your pod.**
+
+
+**You may have exhausted the supply of CPU or Memory in your cluster. In this case you can try several things:
+
+   ** Add more nodes to the cluster.
+**
+    Terminate unneeded pods to make room for pending pods.**
+
+   ** Check that the pod is not larger than your nodes. For example, if all nodes have a capacity of cpu:1, then a pod with a request of cpu: 1.1 will never be scheduled.
+**
+    You can check node capacities with the kubectl get nodes -o <format> command.
+**
+kubectl get nodes -o yaml | egrep '\sname:|cpu:|memory:'
+
+kubectl get nodes -o json | jq '.items[] | {name: .metadata.name, cap: .status.capacity}'
+  
+kubectl scale [--resource-version=version] [--current-replicas=count] --replicas=COUNT (-f FILENAME | TYPE NAME)
+
+kubectl cluster-info    
   
   
  
